@@ -2,7 +2,9 @@
   height: 80vh;
   width: 100%;
   color: white;
+ 
   position: relative; /* required for fade */
+
 }
 
 .banner_contents {

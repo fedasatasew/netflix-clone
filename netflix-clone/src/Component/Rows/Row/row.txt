@@ -1,0 +1,102 @@
+import React, { useEffect, useState } from "react";
+import axios from "../../../utils/axios";
+
+function Row({ fetchUrl }) {
+  const [movies, setMovies] = useState([]);
+let allMovies=[]
+let allMovie=[]
+  useEffect(() => {
+    async function fetchData() {
+    
+       for (const url of fetchUrl) {
+      const response = await axios.get(url);
+      if (response.data.Search) {
+    
+        allMovie+=response.data.Search;
+        // Filter only movies
+        const movies = response.data.Search.filter(item => item.Type === "movie");
+        allMovies = [...allMovies, ...movies];
+        
+        
+      }
+    }
+
+    const uniqueMovies = allMovies.filter(
+      (movie, index, self) =>
+        index === self.findIndex(m => m.imdbID === movie.imdbID));
+       console.log(uniqueMovies)
+       setMovies(uniqueMovies)
+    }
+        
+    fetchData();
+  }, [fetchUrl]);
+  console.log(movies)
+
+
+  return (
+    <div className="row">
+      {/* render movies */}
+    </div>
+  );
+}
+
+export default Row;
+//////////////////
+
+
+import React, { useEffect, useState } from "react";
+import axios from "../../../utils/axios";
+import './row.css'
+function Row({ fetchUrl }) {
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      let allMovies = [];
+
+      for (const url of fetchUrl) {
+        try {
+          const response = await axios.get(url);
+
+          if (response.data.Search) {
+            // Filter only movies from each API request
+            const onlyMovies = response.data.Search.filter(
+              item => item.Type === "movie"
+            );
+
+            allMovies = [...allMovies, ...onlyMovies];
+          }
+        } catch (err) {
+          console.error("Error fetching:", err);
+        }
+      }
+
+      // remove duplicates
+      const uniqueMovies = allMovies.filter(
+        (movie, index, self) =>
+          index === self.findIndex(m => m.imdbID === movie.imdbID)
+      );
+
+      // Select only first 20
+      const top20 = uniqueMovies.slice(0, 20);
+
+      console.log("Top 20 movies:", top20);
+      setMovies(top20);
+    }
+
+    fetchData();
+  }, [fetchUrl]);
+
+  return (
+    <div className="row">
+      {movies.map(m => (
+        <div key={m.imdbID} className="movie-item">
+          <img src={m.Poster} alt={m.Title} />
+          <p>{m.Title}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default Row;

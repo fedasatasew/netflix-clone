@@ -28,4 +28,18 @@ export const requests = {
     `?apikey=${API_KEY}&s=romance`,
     `?apikey=${API_KEY}&s=wedding`,
   ],
+  comedy: [
+  `?apikey=${API_KEY}&s=comedy`,
+  `?apikey=${API_KEY}&s=funny`,
+  `?apikey=${API_KEY}&s=hangover`,
+  `?apikey=${API_KEY}&s=mr bean`,
+],
+animation: [
+  `?apikey=${API_KEY}&s=animation`,
+  `?apikey=${API_KEY}&s=disney`,
+  `?apikey=${API_KEY}&s=pixar`,
+  `?apikey=${API_KEY}&s=cartoon`,
+],
+
+
 };

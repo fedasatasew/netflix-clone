@@ -10,7 +10,7 @@ const Banner = () => {
 useEffect(() => {
   async function fetchData() {
     let allMovies = [];
-
+  console.log(requests.trending)
     // Loop through all trending URLs
     for (const url of requests.trending) {
       const response = await axios.get(url);
@@ -28,7 +28,7 @@ useEffect(() => {
         index === self.findIndex(m => m.imdbID === movie.imdbID)
 
     );
-    console.log(uniqueMovies)
+  
     // Pick a random movie
     let randomMovie = uniqueMovies[Math.floor(Math.random() * uniqueMovies.length)];
 
@@ -43,7 +43,7 @@ useEffect(() => {
 
   fetchData();
 }, []);
-    console.log(movie)
+
   return (
     <div className="banner"
         style={{
